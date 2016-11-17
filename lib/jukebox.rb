@@ -11,26 +11,29 @@ songs = [
 ]
 
 def help
-  puts "I accept the following commands:
+  help =
+"I accept the following commands:
 - help : displays this help message
 - list : displays a list of songs you can play
 - play : lets you choose a song to play
 - exit : exits this program"
+
+  puts help
 end
 
 def list(songs)
-  songs.each_with_index do |song_name, index|
-    puts "#{index + 1}. #{song_name}"
+  songs.each_with_index do |song, i|
+    puts "#{i+1}. #{song}"
   end
 end
 
 def play(songs)
   puts "Please enter a song name or number:"
-  user_answer = gets.chomp
-  if (1..9).include?(user_answer.to_i)
-    puts "Playing #{songs[user_answer.to_i - 1]}"
-  elsif songs.include?(user_answer)
-    puts "Playing #{user_answer}"
+  song_to_play = gets.chomp
+  if (1..9).to_a.include?(song_to_play.to_i)
+    puts "Playing #{songs[song_to_play.to_i - 1]}"
+  elsif songs.include?(song_to_play)
+    puts "Playing #{song_to_play}"
   else
     puts "Invalid input, please try again"
   end
@@ -41,19 +44,22 @@ def exit_jukebox
 end
 
 def run(songs)
-  help
-  puts "Please enter a command:"
-  user_response = gets.chomp
-  while user_response
-    case user_response
-    when "list"
+
+  input = ""
+  while input
+    puts "Please enter a command:"
+    input = gets.chomp
+    case input
+    when 'list'
       list(songs)
-    when "play"
+    when 'play'
+      list(songs)
       play(songs)
-    when "help"
+    when 'help'
       help
-    when "exit"
+    when 'exit'
       exit_jukebox
+      break
     else
       help
     end
